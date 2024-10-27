@@ -20,7 +20,7 @@ export async function POST() {
                     ]
                 },
                 "body": {
-                    "redirectUrl": process.env.CALLBACK_URL
+                    "redirectUrl": process.env.DIGILOCKER_CALLBACK_URL
                 }
             },
             "url": "https://dg-sandbox.setu.co/api/digilocker",
@@ -48,9 +48,7 @@ export async function POST() {
         });
 
         const data = await response.json();
-        console.log("---------------------------------");
-        console.log(JSON.stringify(data));
-        console.log("---------------------------------");
+
         return NextResponse.json({ url: data.url });
     } catch (error) {
         console.error('DigiLocker API Error:', error);
