@@ -161,7 +161,7 @@ export default function Aadhar() {
                 Select your Aadhar card from DigiLocker to share
               </p>
               <button
-                onClick={() => window.open(link, "_blank")}
+                onClick={() => window.open(link, "_self")}
                 className="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition-colors"
               >
                 Open DigiLocker
