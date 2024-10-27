@@ -1,11 +1,12 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { useState, useEffect } from "react";
 
 export default function Aadhar() {
   const [currentStep, setCurrentStep] = useState(1);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [, setIsLoading] = useState(false);
+  const [, setError] = useState<string | null>(null);
   const [link, setLink] = useState("");
   const [digilockerId, setDigilockerId] = useState("");
   const [deepLink, setDeepLink] = useState("");
