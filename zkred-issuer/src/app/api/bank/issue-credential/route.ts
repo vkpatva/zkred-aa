@@ -80,7 +80,7 @@ export async function GET(request: Request) {
         }
 
         console.log('--------------------------')
-        console.log(consentsData)
+        console.log(consentsData);
         console.log('--------------------------')
         // Step 2: Request Data
         const requestDataResponse = await requestData(dataId)
@@ -93,10 +93,11 @@ export async function GET(request: Request) {
 
 
         // Step 3: Fetch Data
+        await new Promise(resolve => setTimeout(resolve, 5000));
         const fetchDataResponse = await fetchData(requestDataResponse.session_id)
-        // console.log('-----------------------------')
-        // console.log(fetchDataResponse)
-        // console.log('-----------------------------')
+        console.log('fetchDataResponse -----------------------------')
+        console.log(fetchDataResponse)
+        console.log('-----------------------------')
 
         // // Parse all XML data
         // const parsedAccounts = []

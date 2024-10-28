@@ -21,7 +21,7 @@ export async function POST(request: Request) {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Basic YWlfdFpDdlBScHBhNEx0Q1dzcU5wZ1J1QXVncWJYaEtHUG86YXNfOGtqTWRwOVFWaHBudnZ5bVdzWHg5ZHV0cldmM1dNNDI='
+                'Authorization': process.env.TRUFIU_AUTH_HEADER as string
             },
             body: JSON.stringify({
                 payload: `fi=${fi}&resdate=${resdate}&ecres=${ecres}`
