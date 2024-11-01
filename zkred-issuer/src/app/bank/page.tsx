@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 
 export default function Bank() {
   const [currentStep, setCurrentStep] = useState(1);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [mobileNumber, setMobileNumber] = useState("");

@@ -1,8 +1,5 @@
 import { NextResponse } from 'next/server'
 
-interface DecryptRequest {
-    payload: string
-}
 
 export async function POST(request: Request) {
     try {
