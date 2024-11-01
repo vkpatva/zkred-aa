@@ -17,28 +17,28 @@ const UseCaseCard = ({
   icon: React.ElementType;
   redirect: string;
 }) => (
-  <Card className="bg-zinc-900 mb-4 hover:bg-zinc-800 transition-colors">
+  <Card className="bg-white border border-gray-200 mb-4 hover:bg-gray-50 transition-colors shadow-sm">
     <CardContent className="p-6">
       <div className="flex items-start gap-6">
-        <div className="w-20 h-20 flex-shrink-0 bg-zinc-800 rounded-full flex items-center justify-center">
-          <Icon size={32} className="text-blue-400" />
+        <div className="w-20 h-20 flex-shrink-0 bg-blue-50 rounded-full flex items-center justify-center">
+          <Icon size={32} className="text-blue-600" />
         </div>
 
         <div className="flex-grow">
-          <h3 className="text-xl font-semibold text-white mb-2">{title}</h3>
-          <p className="text-gray-400 mb-4">{description}</p>
+          <h3 className="text-xl font-semibold text-gray-900 mb-2">{title}</h3>
+          <p className="text-gray-600 mb-4">{description}</p>
 
           <div className="space-y-2">
-            <p className="text-sm font-medium text-gray-300">
+            <p className="text-sm font-medium text-gray-700">
               Where it can be used:
             </p>
             {useCase.map((doc, index) => (
               <div
                 key={index}
-                className="flex items-center gap-2 text-gray-400"
+                className="flex items-center gap-2 text-gray-600"
               >
-                <div className="w-4 h-4 rounded-full bg-blue-500/20 flex items-center justify-center">
-                  <ChevronRight size={12} className="text-blue-400" />
+                <div className="w-4 h-4 rounded-full bg-blue-100 flex items-center justify-center">
+                  <ChevronRight size={12} className="text-blue-600" />
                 </div>
                 {doc}
               </div>
@@ -47,7 +47,7 @@ const UseCaseCard = ({
         </div>
 
         <Button
-          className="bg-white text-black hover:bg-gray-200 self-start"
+          className="bg-blue-600 text-white hover:bg-blue-700 self-start"
           onClick={() => {
             window.location.href = redirect;
           }}
@@ -64,48 +64,52 @@ const AccountAggregatorDashboard = () => {
     {
       title: "Aadhar Card Verification",
       description:
-        "Get a Verifiable Credentials for your Aadhar Card by verifying from DigiLocker.",
+        "Get a Verifiable Credential for your Aadhar Card through secure DigiLocker verification.",
       icon: Building2,
       useCase: [
-        "Buy a SIM Card",
-        "Open a Bank Account",
-        "Get a Loan",
-        "Validate your Identity for Insurance",
-        "Apply for a Credit Card",
+        "Identity Verification for KYC",
+        "Government Services",
+        "Financial Services",
+        "Employment Verification",
+        "Education Verification",
       ],
       redirect: "/aadhar",
     },
     {
-      title: "Investment Portfolio Analysis",
+      title: "Bank Account Verification",
       description:
-        "Link your investment accounts to get a comprehensive view of your portfolio performance.",
+        "Securely share your banking information as Verifiable Credentials for various financial services.",
       icon: Wallet,
       useCase: [
-        "Mutual Fund Statements",
-        "Demat Account Details",
-        "Investment Holdings",
+        "Loan Applications",
+        "Insurance Claims",
+        "Account Balance Verification",
+        "Term Deposit Proof",
+        "Recurring Deposit Verification",
       ],
-      redirect: "/aadhar",
+      redirect: "/bank",
     },
     {
-      title: "Credit Assessment",
+      title: "Insurance Verification",
       description:
-        "Share your financial data securely for quick and accurate credit assessment.",
+        "Create Verifiable Credentials for your insurance policies and coverage details.",
       icon: CreditCard,
       useCase: [
-        "Bank Statements",
-        "Credit Card Statements",
-        "Loan Account Details",
+        "Policy Verification",
+        "Coverage Proof",
+        "Claims History",
+        "Premium Payment Status",
+        "Insurance Portfolio Overview",
       ],
-      redirect: "/aadhar",
+      redirect: "/insurance",
     },
   ];
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-white p-8">
+    <div className="min-h-screen bg-gray-50 text-gray-900 p-8">
       <div className="max-w-6xl mx-auto">
         <header className="flex justify-between items-center mb-12">
-          <div className="text-2xl font-bold">Zkred Issuer</div>
+          <div className="text-2xl font-bold">ZKAAccess</div>
         </header>
 
         <div className="grid grid-cols-1 gap-8">
