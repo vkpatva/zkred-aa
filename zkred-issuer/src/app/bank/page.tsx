@@ -1,9 +1,10 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 
-export default function Bank() {
+function BankContent() {
   const [currentStep, setCurrentStep] = useState(1);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isLoading, setIsLoading] = useState(false);
@@ -264,5 +265,13 @@ export default function Bank() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function Bank() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <BankContent />
+    </Suspense>
   );
 }
