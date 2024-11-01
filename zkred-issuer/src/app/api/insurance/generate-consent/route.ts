@@ -22,7 +22,7 @@ export async function POST(request: Request) {
         const expiryTime = new Date(Date.now() + 60 * 60 * 1000).toISOString()
         const payload = {
             redirect_params: {
-                callback_url: `${process.env.TRUFIU_CALLBACK_URL as string}/bank`,
+                callback_url: `${process.env.TRUFIU_CALLBACK_URL as string}/insurance`,
                 language_code: "en-IN"
             },
             consents: [{
@@ -31,7 +31,7 @@ export async function POST(request: Request) {
                 consent_mode: "STORE",
                 fetch_type: "PERIODIC",
                 consent_types: ["PROFILE", "SUMMARY"],
-                fi_types: ["DEPOSIT", "TERM_DEPOSIT", "RECURRING_DEPOSIT"],
+                fi_types: ["INSURANCE_POLICIES"],
                 frequency: {
                     unit: "DAY",
                     value: 1
