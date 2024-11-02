@@ -28,19 +28,47 @@ Returns:
 - `status`: Verification status
 - `result`: Verification result (if available)
 
-Application is currently running on `http://localhost:8000/`
+Application is currently running on `https://zkred-aa.onrender.com`
 
 Curl to initialize verification:
 
 ```curl
-curl --location 'http://localhost:8000/api/verifier/verify' \
+curl --location 'https://zkred-aa.onrender.com/api/verifier/verify' \
 --header 'Content-Type: application/json' \
 --data '{
     "aadhar": {
         "required": true,
         "dob": {
-            "query": "lt",
-            "value": "2001-01-01"
+            "query": "gt",
+            "value": "1999-01-01"
+        }
+    },
+    "bank": {
+        "required": true,
+        "currentBalance": {
+            "query": "gt",
+            "value": "14000"
+        },
+        "currentODLimit": {
+            "query": "gt",
+            "value": "10000"
+        },
+        "drawingLimit": {
+            "query": "gt",
+            "value": "1000"
+        }
+    },
+    "insurance": {
+        "required": true,
+        "sumAssured": {
+            "query": "gt",
+            "value": "100000"
+        },
+        "policyStartDate": {
+            "required": true
+        },
+        "maturityDate": {
+            "required": true
         }
     }
 }'
@@ -48,6 +76,6 @@ curl --location 'http://localhost:8000/api/verifier/verify' \
 
 Curl to check verification status:
 
-```
-curl -X GET "http://localhost:8000/api/verifier/verification/{verificationId}"
+```curl
+curl -X GET "https://zkred-aa.onrender.com/api/verifier/verification/{verificationId}"
 ```

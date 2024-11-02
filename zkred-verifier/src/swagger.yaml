@@ -1,0 +1,109 @@
+openapi: 3.0.0
+info:
+  title: ZKRed Verifier API
+  description: API documentation for ZKRed Verifier service
+  version: 1.0.0
+servers:
+  - url: https://zkred-aa.onrender.com
+    description: Production server
+  - url: http://localhost:8000
+    description: Local development server
+
+paths:
+  /api/verifier/verify:
+    post:
+      summary: Create Verification Request
+      description: Initialize a new verification request with specific requirements
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                aadhar:
+                  required: true
+                  dob:
+                    query: "gt"
+                    value: "1999-01-01"
+                bank:
+                  required: true
+                  currentBalance:
+                    query: "gt"
+                    value: "14000"
+                  currentODLimit:
+                    query: "gt"
+                    value: "10000"
+                  drawingLimit:
+                    query: "gt"
+                    value: "1000"
+                insurance:
+                  required: true
+                  sumAssured:
+                    query: "gt"
+                    value: "100000"
+                  policyStartDate:
+                    required: true
+                  maturityDate:
+                    required: true
+
+  /api/verifier/callback:
+    post:
+      summary: Verification Callback
+      description: Callback endpoint for Privado Wallet after proof generation
+      parameters:
+        - in: query
+          name: sessionId
+          required: true
+          schema:
+            type: string
+          description: Session identifier for the verification
+      responses:
+        "200":
+          description: Callback processed successfully
+
+  /api/verifier/verification/{verificationId}:
+    get:
+      summary: Check Verification Status
+      description: Get the current status and result of a verification request
+      parameters:
+        - in: path
+          name: verificationId
+          required: true
+          schema:
+            type: string
+          description: Unique verification identifier
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [pending, completed, failed]
+                  result:
+                    type: object
+                    description: Verification result if available
+
+  /health:
+    get:
+      summary: Health Check
+      description: Check if the API is up and running
+      responses:
+        "200":
+          description: API is healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "healthy"
+                  timestamp:
+                    type: string
+                    format: date-time
+                    example: "2024-03-20T10:30:00Z"

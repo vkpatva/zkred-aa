@@ -7,13 +7,16 @@
     "express": "^4.21.1",
     "path": "^0.12.7",
     "raw-body": "^3.0.0",
-    "uuid": "^11.0.2"
+    "swagger-ui-express": "^5.0.1",
+    "uuid": "^11.0.2",
+    "yaml": "^2.6.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
     "@types/jsonld": "^1.5.15",
     "@types/n3": "^1.21.1",
+    "@types/swagger-ui-express": "^4.1.7",
     "nodemon": "^3.1.7",
     "ts-node": "^10.9.2",
     "typescript": "^5.6.3"
