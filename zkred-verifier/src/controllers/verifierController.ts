@@ -4,6 +4,7 @@ import getRawBody from 'raw-body';
 import { v4 as uuidv4 } from 'uuid';
 import crypto from 'crypto';
 import path from 'path';
+import { ZeroKnowledgeProofRequest } from '@iden3/js-iden3-auth/dist/types/types-sdk';
 const requestMap = new Map();
 const shortUrlMap = new Map<string, any>();
 const verificationMap = new Map<string, { token?: string, status: 'pending' | 'completed' | 'failed', result?: any }>();
@@ -16,7 +17,7 @@ export const getAuthRequest: RequestHandler = async (req, res): Promise<void> =>
     // console.log()
     const uri = `${hostUrl}${callbackURL}?sessionId=${sessionId}`;
 
-    const request = auth.createAuthorizationRequest("Verifying Proof of Personhood", audience as string, uri);
+    const request = auth.createAuthorizationRequest("Verifying Credentials", audience as string, uri);
 
     const requestId = uuidv4();
     const requestThid = uuidv4();
@@ -32,7 +33,6 @@ export const getAuthRequest: RequestHandler = async (req, res): Promise<void> =>
     const scope = request.body.scope ?? [];
     request.body.scope = [...scope];
 
-    console.log(req.body.aadhar.required)
     if (req.body?.aadhar?.required === true) {
         const proofRequest = {
             "circuitId": "credentialAtomicQueryV3-beta.1",
@@ -99,6 +99,218 @@ export const getAuthRequest: RequestHandler = async (req, res): Promise<void> =>
             };
 
             request.body.scope.push(proofRequest3);
+        }
+    }
+
+    if (req.body?.bank?.required === true) {
+        const proofRequest = {
+            "circuitId": "credentialAtomicQuerySigV2",
+            "id": Date.now() + 3,
+            "query": {
+                "groupId": 2,
+                "allowedIssuers": [
+                    "*"
+                ],
+                "context": "ipfs://QmQsMPq764m1A7X83DPzKq19pAEbmxsL2Suosy5u497rCP",
+                "type": "FinCred",
+                "credentialSubject": {
+                    "name": {}
+                }
+            }
+        }
+        request.body.scope.push(proofRequest);
+        const proofRequest2 = {
+            "circuitId": "credentialAtomicQuerySigV2",
+            "id": Date.now() + 3,
+            "query": {
+                "groupId": 2,
+                "allowedIssuers": [
+                    "*"
+                ],
+                "context": "ipfs://QmQsMPq764m1A7X83DPzKq19pAEbmxsL2Suosy5u497rCP",
+                "type": "FinCred",
+                "credentialSubject": {
+                    "pan": {}
+                }
+            }
+        }
+        request.body.scope.push(proofRequest2);
+
+        // Helper function to create balance-type queries
+        const createBalanceQuery = (queryType: string, value: string) => {
+            switch (queryType) {
+                case 'gt':
+                    return { "$gt": parseInt(value) };
+                case 'lt':
+                    return { "$lt": parseInt(value) };
+                case 'eq':
+                    return { "$eq": parseInt(value) };
+                default:
+                    return {};
+            }
+        };
+
+        // Current Balance Check
+        if (req.body.bank.currentBalance) {
+            const { query, value } = req.body.bank.currentBalance;
+            const proofRequest = {
+                "circuitId": "credentialAtomicQuerySigV2",
+                "id": Date.now() + 4,
+                "query": {
+                    "groupId": 2,
+                    "allowedIssuers": ["*"],
+                    "context": "ipfs://QmQsMPq764m1A7X83DPzKq19pAEbmxsL2Suosy5u497rCP",
+                    "type": "FinCred",
+                    "credentialSubject": {
+                        "deposit.currentBalance": createBalanceQuery(query, value)
+                    }
+                }
+            };
+            request.body.scope.push(proofRequest as unknown as ZeroKnowledgeProofRequest);
+        }
+
+        // OD Limit Check
+        if (req.body.bank.currentODLimit) {
+            const { query, value } = req.body.bank.currentODLimit;
+            const proofRequest = {
+                "circuitId": "credentialAtomicQuerySigV2",
+                "id": Date.now() + 5,
+                "query": {
+                    "groupId": 2,
+                    "allowedIssuers": ["*"],
+                    "context": "ipfs://QmQsMPq764m1A7X83DPzKq19pAEbmxsL2Suosy5u497rCP",
+                    "type": "FinCred",
+                    "credentialSubject": {
+                        "deposit.currentODLimit": createBalanceQuery(query, value)
+                    }
+                }
+            };
+            request.body.scope.push(proofRequest as unknown as ZeroKnowledgeProofRequest);
+        }
+
+        // Drawing Limit Check
+        if (req.body.bank.drawingLimit) {
+            const { query, value } = req.body.bank.drawingLimit;
+            const proofRequest = {
+                "circuitId": "credentialAtomicQuerySigV2",
+                "id": Date.now() + 6,
+                "query": {
+                    "groupId": 2,
+                    "allowedIssuers": ["*"],
+                    "context": "ipfs://QmQsMPq764m1A7X83DPzKq19pAEbmxsL2Suosy5u497rCP",
+                    "type": "FinCred",
+                    "credentialSubject": {
+                        "deposit.drawingLimit": createBalanceQuery(query, value)
+                    }
+                }
+            };
+            request.body.scope.push(proofRequest as unknown as ZeroKnowledgeProofRequest);
+        }
+    }
+
+    if (req.body?.insurance?.required === true) {
+        const proofRequest = {
+            "circuitId": "credentialAtomicQuerySigV2",
+            "id": Date.now() + 7,
+            "query": {
+                "groupId": 3,
+                "allowedIssuers": [
+                    "*"
+                ],
+                "context": "ipfs://Qmehbcgt83MRN2w8mxgdCh31bNgZVX3bcnZGb6qZeY8Ahu",
+                "type": "InsuranceCredential",
+                "credentialSubject": {
+                    "name": {}
+                }
+            }
+        }
+        request.body.scope.push(proofRequest);
+        const proofRequest2 = {
+            "circuitId": "credentialAtomicQuerySigV2",
+            "id": Date.now() + 8,
+            "query": {
+                "groupId": 3,
+                "allowedIssuers": [
+                    "*"
+                ],
+                "context": "ipfs://Qmehbcgt83MRN2w8mxgdCh31bNgZVX3bcnZGb6qZeY8Ahu",
+                "type": "InsuranceCredential",
+                "credentialSubject": {
+                    "pan": {}
+                }
+            }
+        }
+        request.body.scope.push(proofRequest2);
+
+        // Sum Assured Check
+        if (req.body.insurance.sumAssured) {
+            const { query, value } = req.body.insurance.sumAssured;
+            let sumAssuredQuery = {};
+
+            switch (query) {
+                case 'gt':
+                    sumAssuredQuery = { "$gt": parseInt(value) };
+                    break;
+                case 'lt':
+                    sumAssuredQuery = { "$lt": parseInt(value) };
+                    break;
+                case 'eq':
+                    sumAssuredQuery = { "$eq": parseInt(value) };
+                    break;
+                default:
+                    sumAssuredQuery = {};
+            }
+
+            const proofRequest3 = {
+                "circuitId": "credentialAtomicQuerySigV2",
+                "id": Date.now() + 9,
+                "query": {
+                    "groupId": 3,
+                    "allowedIssuers": ["*"],
+                    "context": "ipfs://Qmehbcgt83MRN2w8mxgdCh31bNgZVX3bcnZGb6qZeY8Ahu",
+                    "type": "InsuranceCredential",
+                    "credentialSubject": {
+                        "sumAssured": sumAssuredQuery
+                    }
+                }
+            };
+            request.body.scope.push(proofRequest3);
+        }
+
+        // Policy Start Date Check
+        if (req.body.insurance.policyStartDate?.required === true) {
+            const proofRequest4 = {
+                "circuitId": "credentialAtomicQuerySigV2",
+                "id": Date.now() + 10,
+                "query": {
+                    "groupId": 3,
+                    "allowedIssuers": ["*"],
+                    "context": "ipfs://Qmehbcgt83MRN2w8mxgdCh31bNgZVX3bcnZGb6qZeY8Ahu",
+                    "type": "InsuranceCredential",
+                    "credentialSubject": {
+                        "policyStartDate": {}
+                    }
+                }
+            };
+            request.body.scope.push(proofRequest4);
+        }
+
+        // Maturity Date Check
+        if (req.body.insurance.maturityDate?.required === true) {
+            const proofRequest5 = {
+                "circuitId": "credentialAtomicQuerySigV2",
+                "id": Date.now() + 11,
+                "query": {
+                    "groupId": 3,
+                    "allowedIssuers": ["*"],
+                    "context": "ipfs://Qmehbcgt83MRN2w8mxgdCh31bNgZVX3bcnZGb6qZeY8Ahu",
+                    "type": "InsuranceCredential",
+                    "credentialSubject": {
+                        "maturityDate": {}
+                    }
+                }
+            };
+            request.body.scope.push(proofRequest5);
         }
     }
 
