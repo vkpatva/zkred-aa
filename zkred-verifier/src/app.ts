@@ -12,6 +12,15 @@ const port = process.env.VERIFIER_BACKEND_PORT;
 app.use(cors());
 app.use(express.json());
 
+// Basic routes
+app.get('/', (req, res) => {
+    res.json({ message: 'Hello World!' });
+});
+
+app.get('/health', (req, res) => {
+    res.json({ status: 'healthy', timestamp: new Date().toISOString() });
+});
+
 // Routes
 app.use('/api/verifier', verifierRoutes);
 
