@@ -21,7 +21,7 @@
   "scripts": {
     "start": "node dist/app.js",
     "dev": "nodemon src/app.ts",
-    "build": "tsc",
+    "build": "npm install && tsc",
     "watch": "tsc -w"
   }
 }
