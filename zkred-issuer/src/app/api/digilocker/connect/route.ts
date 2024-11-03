@@ -20,7 +20,7 @@ export async function POST() {
                     ]
                 },
                 "body": {
-                    "redirectUrl": process.env.DIGILOCKER_CALLBACK_URL
+                    "redirectUrl": `${process.env.CALLBACK_URL}/aadhar`
                 }
             },
             "url": "https://dg-sandbox.setu.co/api/digilocker",

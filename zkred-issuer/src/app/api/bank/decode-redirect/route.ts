@@ -14,7 +14,7 @@ export async function POST(request: Request) {
             )
         }
 
-        const response = await fetch('http://localhost:8080/v1/utils/redirect/decrypt', {
+        const response = await fetch(`${process.env.TRUFIU_BASE_URL}/v1/utils/redirect/decrypt`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

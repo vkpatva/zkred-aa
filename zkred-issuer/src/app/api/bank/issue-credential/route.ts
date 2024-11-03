@@ -39,6 +39,7 @@ async function requestData(consentHandle: string) {
 
 async function fetchData(sessionId: string) {
 
+    console.log(BASE_URL)
     const response = await fetch(`${BASE_URL}/v2/data/fetch`, {
         method: 'POST',
         headers: {
@@ -65,6 +66,7 @@ async function parseAccountData(xmlData: string) {
 
 export async function GET(request: Request) {
     try {
+        console.log('inside issue-credential')
         // Get dataId from query params
         const { searchParams } = new URL(request.url)
         const dataId = searchParams.get('dataId')
@@ -72,6 +74,8 @@ export async function GET(request: Request) {
         if (!dataId) {
             return NextResponse.json({ error: 'Missing dataId parameter' }, { status: 400 })
         }
+
+        console.log('fetching data for dataId: ', dataId)
 
         // Step 1: Fetch Consents
         const consentsData = await fetchConsents(dataId)

@@ -22,7 +22,7 @@ export async function POST(request: Request) {
         const expiryTime = new Date(Date.now() + 60 * 60 * 1000).toISOString()
         const payload = {
             redirect_params: {
-                callback_url: `${process.env.TRUFIU_CALLBACK_URL as string}/insurance`,
+                callback_url: `${process.env.CALLBACK_URL as string}/insurance`,
                 language_code: "en-IN"
             },
             consents: [{
@@ -56,7 +56,7 @@ export async function POST(request: Request) {
                 'fiu_entity_id': 'zkred',
                 'aa_entity_id': 'saafe-sandbox',
                 'Content-Type': 'application/json',
-                'Authorization': process.env.TRUFIU_HEADER as string
+                'Authorization': process.env.TRUFIU_AUTH_HEADER as string
             },
             body: JSON.stringify(payload)
         })
