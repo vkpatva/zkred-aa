@@ -333,12 +333,10 @@ export const getAuthRequest: RequestHandler = async (req, res): Promise<void> =>
 
 export const callback: RequestHandler = async (req, res): Promise<void> => {
     try {
-        console.log('inside callback')
         const sessionId = req.query.sessionId;
 
         const raw = await getRawBody(req);
         const tokenStr = raw.toString().trim();
-        console.log(tokenStr)
 
         const ethURL = process.env.VERIFIER_BACKEND_AMOY_RPC;
         const contractAddress = "0x1a4cC30f2aA0377b0c3bc9848766D90cb4404124";

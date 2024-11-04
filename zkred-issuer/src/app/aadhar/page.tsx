@@ -42,7 +42,6 @@ export default function Aadhar() {
     setDigilockerId(id as string);
     // If success is true and id exists, update step and log id
     if (success === "True" && id) {
-      console.log("DigiLocker ID:", id);
       setCurrentStep(3);
     }
   }, []); // Empty dependency array means this runs once on component mount
@@ -72,7 +71,6 @@ export default function Aadhar() {
     }
   };
   const handleIssueCredentials = async () => {
-    console.log("Issuing credentials");
     setIsLoading(true);
     setError(null);
 

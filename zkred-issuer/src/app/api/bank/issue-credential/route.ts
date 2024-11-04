@@ -39,7 +39,6 @@ async function requestData(consentHandle: string) {
 
 async function fetchData(sessionId: string) {
 
-    console.log(BASE_URL)
     const response = await fetch(`${BASE_URL}/v2/data/fetch`, {
         method: 'POST',
         headers: {
@@ -48,9 +47,6 @@ async function fetchData(sessionId: string) {
         },
         body: JSON.stringify({ session_id: sessionId })
     })
-    console.log('\n\n\n\n----------FETCH DATA RESPONSE------------------')
-    console.log(response)
-    console.log('\n\n\n\n----------FETCH DATA RESPONSE------------------')
     return await response.json()
 }
 

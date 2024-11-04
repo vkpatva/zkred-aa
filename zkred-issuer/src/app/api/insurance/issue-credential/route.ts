@@ -47,9 +47,6 @@ async function fetchData(sessionId: string) {
         },
         body: JSON.stringify({ session_id: sessionId })
     })
-    console.log('\n\n\n\n----------FETCH DATA RESPONSE------------------')
-    console.log(response)
-    console.log('\n\n\n\n----------FETCH DATA RESPONSE------------------')
     return await response.json()
 }
 
@@ -92,28 +89,16 @@ export async function GET(request: Request) {
             return NextResponse.json({ error: 'No consent found' }, { status: 404 })
         }
 
-        console.log('--------------------------')
-        console.log(consentsData);
-        console.log('--------------------------')
         // Step 2: Request Data
         const requestDataResponse = await requestData(dataId)
         if (!requestDataResponse.session_id) {
             return NextResponse.json({ error: 'Failed to get session ID' }, { status: 500 })
         }
-        console.log('----------REQUEST DATA RESPONSE------------------')
-        console.log(requestDataResponse)
-        console.log('----------REQUEST DATA RESPONSE------------------')
 
 
         // Step 3: Fetch Data
         await new Promise(resolve => setTimeout(resolve, 5000));
         const fetchDataResponse = await fetchData(requestDataResponse.session_id)
-        console.log('fetchDataResponse -----------------------------')
-        console.log(fetchDataResponse)
-        console.log('-----------------------------')
-        console.log('fetchDataResponse.fips -----------------------------')
-        console.log(fetchDataResponse.fips)
-        console.log('-----------------------------')
         // Parse insurance data
         const parsedPolicies = []
         for (const fip of fetchDataResponse.fips || []) {
@@ -128,10 +113,6 @@ export async function GET(request: Request) {
                 }
             }
         }
-        console.log('parsedPolicies -----------------------------')
-        console.log(JSON.stringify(parsedPolicies))
-        console.log('-----------------------------')
-        console.log('issuance started')
         const zkredResponse = await fetch(process.env.ISSUER_URL as string, {
             method: 'POST',
             headers: {
@@ -179,7 +160,6 @@ export async function GET(request: Request) {
                 signatureProof: true
             })
         });
-        console.log('issuance completed')
         const zkredData = await zkredResponse.json();
         const linkId = zkredData.id;
 
