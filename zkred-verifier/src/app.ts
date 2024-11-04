@@ -1,4 +1,5 @@
 import express, { Express } from 'express';
+import https from 'https';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import swaggerUi from 'swagger-ui-express';
@@ -11,6 +12,12 @@ dotenv.config();
 
 const app: Express = express();
 const port = process.env.VERIFIER_BACKEND_PORT;
+
+const options = {
+    key: fs.readFileSync('server.key'),
+    cert: fs.readFileSync('server.crt')
+};
+
 
 // Middleware
 app.use(cors());
@@ -35,6 +42,9 @@ app.get('/health', (req, res) => {
 // Routes
 app.use('/api/verifier', verifierRoutes);
 
-app.listen(port, () => {
-    console.log(`server running on port ${port}`);
+// Create HTTPS server
+const httpsServer = https.createServer(options, app);
+
+httpsServer.listen(port, () => {
+    console.log(`HTTPS server running on port ${port}`);
 }); 
