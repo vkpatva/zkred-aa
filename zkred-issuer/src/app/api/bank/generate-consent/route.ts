@@ -16,8 +16,13 @@ export async function POST(request: Request) {
                 { status: 400 }
             )
         }
-
-
+        console.log("--------------------------------")
+        console.log("-----------generate-consent------------")
+        console.log(mobileNumber)
+        console.log(process.env.CALLBACK_URL)
+        console.log(process.env.TRUFIU_URL)
+        console.log(process.env.TRUFIU_AUTH_HEADER)
+        console.log("--------------------------------")
         const currentTime = new Date().toISOString()
         const expiryTime = new Date(Date.now() + 60 * 60 * 1000).toISOString()
         const payload = {
@@ -48,7 +53,7 @@ export async function POST(request: Request) {
                 }
             }]
         }
-
+        console.log("---------- consent------------")
         // Make request to consent API
         const response = await fetch(process.env.TRUFIU_URL as string, {
             method: 'POST',
@@ -63,6 +68,9 @@ export async function POST(request: Request) {
         // console.log(response)
 
         const data = await response.json()
+
+        console.log("---------- consent response------------")
+
         console.log(data)
         return NextResponse.json({ url: data.redirect_url })
 
