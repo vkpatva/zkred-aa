@@ -46,6 +46,33 @@ paths:
                     required: true
                   maturityDate:
                     required: true
+      responses:
+        "200":
+          description: Verification request created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  verificationId:
+                    type: string
+                    description: Unique identifier for the verification request
+                  sessionUrl:
+                    type: string
+                    description: URL for the verification session
+                example:
+                  verificationId: "ver_123456789"
+                  sessionUrl: "https://wallet.privado.ai/verify?session=abc123"
+        "400":
+          description: Invalid request parameters
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message describing the validation failure
 
   /api/verifier/callback:
     post:

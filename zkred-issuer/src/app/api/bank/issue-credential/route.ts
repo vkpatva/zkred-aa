@@ -62,7 +62,6 @@ async function parseAccountData(xmlData: string) {
 
 export async function GET(request: Request) {
     try {
-        console.log('inside issue-credential')
         // Get dataId from query params
         const { searchParams } = new URL(request.url)
         const dataId = searchParams.get('dataId')
@@ -71,26 +70,17 @@ export async function GET(request: Request) {
             return NextResponse.json({ error: 'Missing dataId parameter' }, { status: 400 })
         }
 
-        console.log('fetching data for dataId: ', dataId)
 
         // Step 1: Fetch Consents
         const consentsData = await fetchConsents(dataId)
         if (!consentsData.consents?.[0]) {
             return NextResponse.json({ error: 'No consent found' }, { status: 404 })
         }
-
-        console.log('--------------------------')
-        console.log(consentsData);
-        console.log('--------------------------')
         // Step 2: Request Data
         const requestDataResponse = await requestData(dataId)
         if (!requestDataResponse.session_id) {
             return NextResponse.json({ error: 'Failed to get session ID' }, { status: 500 })
         }
-        console.log('----------REQUEST DATA RESPONSE------------------')
-        console.log(requestDataResponse)
-        console.log('----------REQUEST DATA RESPONSE------------------')
-
 
         // Step 3: Fetch Data
         await new Promise(resolve => setTimeout(resolve, 5000));
