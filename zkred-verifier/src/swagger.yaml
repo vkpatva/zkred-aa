@@ -4,7 +4,7 @@ info:
   description: API documentation for ZKRed Verifier service
   version: 1.0.0
 servers:
-  - url: https://ec2-13-233-101-176.ap-south-1.compute.amazonaws.com/
+  - url: https://zkaaccess.verifier.zkred.tech/
     description: AWS deployment
   - url: https://zkred-aa.onrender.com
     description: Production server
