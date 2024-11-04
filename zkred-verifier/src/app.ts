@@ -14,8 +14,9 @@ const app: Express = express();
 const port = process.env.VERIFIER_BACKEND_PORT;
 
 const options = {
-    key: fs.readFileSync('server.key'),
-    cert: fs.readFileSync('server.crt')
+    cert: fs.readFileSync('etc/letsencrypt/live/zkaaccess.verifier.zkred.tech/fullchain.pem'),
+    key: fs.readFileSync('etc/letsencrypt/live/zkaaccess.verifier.zkred.tech/privkey.pem'),
+    ca: fs.readFileSync('etc/letsencrypt/live/zkaaccess.verifier.zkred.tech/chain.pem'),
 };
 
 
